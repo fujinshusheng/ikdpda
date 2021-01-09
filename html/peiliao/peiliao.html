@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>熔炼车间投料 - 表单页面</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        .btn-submit {
+            display: block;
+        }
+		.newtextStyle {
+			width:97% !important;
+			box-sizing:border-box;
+		}
+		.textBox p {
+				padding-top: 6px !important;
+			}
+		.btn-submit {
+			padding-top: 5%;
+			padding-bottom: 5%;
+		}	
+		@media screen and (max-width: 380px) {
+			.textBox {
+				width: 100%;
+				margin: 0 auto;
+				padding-top: 40px;
+			}
+			.textBox p {
+				text-align: left;
+				font-size: 14px;
+				color: #fff;
+				padding-top: 6px;
+				padding-bottom: 5px;
+				line-height: 24px;
+				text-indent:8px;
+			}
+			.listyle{
+				width:80%;
+				left:10%;
+			}
+		}
+    </style>
+    <script type="text/javascript">
+        var type1Value = 1;
+        var zhongl = 1;
+
+    </script>
+</head>
+<body>
+    <div class="header" style="z-index:999;">
+        <span onclick="api.closeWin();" class="goBack">返回</span>配料投料
+        <span class="code" id="scode" onclick="sjerweima()"><i class="H-iconfont H-icon-scanning H-font-size-28 H-vertical-middle"></i></span>
+    </div>
+    <div class="fingerprint bg-ybzck">
+        <div class="textBox" id="sl22jcc">
+            <ul>
+                <li style="margin-top:10px;">
+                    <span style="line-height:30px; color:#fff;padding-right: 10px;">
+                        <input type="radio" class="textStyle" name="type1" id="fs1" style="width:26px;" onclick="type1Value = 1;erweima('LD');jw.scan_trim()" value="1" /><label for="fs1">扫描铝锭</label>
+                    </span>
+                    <span style="line-height:30px; color:#fff;padding-right: 10px;">
+                        <input type="radio" class="textStyle" name="type1" id="fs2" style="width:26px;" checked="checked" onclick="type1Value = 2;getclph();" value="2" /><label for="fs2">手动选择</label>
+                    </span>
+					<span style="line-height:30px; color:#fff;">
+                        <input type="radio" class="textStyle" name="type1" id="fs3" style="width:26px;" onclick="type1Value = 3;erweima('HL');jw.scan_trim()" value="3" /><label for="fs3">扫描回料</label>
+                    </span>
+                </li>
+                <li class="listyle">
+                    <p>材料牌号</p>
+                    <select class="newtextStyle textStyle" name="CLPH" id="CLPH"></select>
+                </li>
+                <li class="listyle">
+                    <p>扫描操作工二维码</p>
+                    <input type="text" readonly="readonly" class="newtextStyle textStyle" name="YG" id="YG" onclick="erweima('YG')" />
+                </li>
+                <li class="listyle">
+                    <p>炉号</p>
+                    <input type="text" readonly="readonly" class="newtextStyle textStyle" name="LH" id="LH" onclick="erweima('LH')" />
+                </li>
+                <li class="listyle">
+                    <p>重量(KG)</p>
+                    <input type="number" class="newtextStyle textStyle" name="ZL" id="ZL" onclick=" zhongl = 0;" />
+                </li>
+                
+                <li class="listyle">
+                    <p id="HLT" style="display: none;" beizhu="回料桶信息" style="color:red; font-weight:bold; font-size:16px;"></p>
+                </li>
+            </ul>
+        </div>
+        <p class="btn-submit">
+			<!-- "db.openWin({ url: '../peiliaolist/peiliaolist_body.html' })" -->
+			<input type="button" value="记录" class="btn btn2" onclick="db.openWin({ url: '../peiliaolist/peiliaolist_body.html' })" style="width: 90px;" />
+           <!-- <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" /> -->
+            <input type="submit" value="提交" class="btn btn2" id="but" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/base/H.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/api1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="peiliao.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            window.setInterval(function () {
+                if (zhongl == 0) {
+                    $("body").css("padding-top", "25px");
+                    $("#sl22jcc").css("padding-top", "80px");
+                }
+            }, 1000);
+        })
+
+    </script>
+</body>
+</html>

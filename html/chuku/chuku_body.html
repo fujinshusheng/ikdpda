@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>原标准出库 - 表单 - 内容页面</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+    </style>
+</head>
+<body class="bg-ybzck">
+    <div class="header">
+        <span class="goBack" onclick="api.closeWin();">返回</span>铝锭出库
+        <span class="code" onclick="sjerweima()"><i class="H-iconfont H-icon-scanning H-font-size-28 H-vertical-middle"></i></span>
+    </div>
+    <div class="fingerprint">
+        <div class="textBox2">
+            <div class="content">
+                <span>领料日期</span>
+                <input type="text" class="textStyle" name="FDate" required id="FDate" readonly="readonly" />
+            </div>
+            <div class="content">
+                <span>领料工</span>
+                <input class="textStyle inp1" name="FEmplNameLL" id="FEmplNameLL" readonly="readonly" onclick="erweima('YG')" style="width:60px; margin-right:10px;" />
+                <input class="textStyle inp1" name="YGCJ" id="YGCJ" readonly="readonly" onclick="erweima('YG')" style="width:83px;" />
+            </div>
+            <div class="content">
+                <span class="selectName">领料车间</span>
+                <div class="textSelect">
+                    <select id="FIWorkShipID"></select>
+                </div>
+            </div>
+            <div class="content">
+                <span class="selectName">出库仓库</span>
+                <div class="textSelect">
+                    <select id="FOWorkShipID"></select>
+                </div>
+            </div>
+            <div class="content list2">
+                <span>铝锭二维<br />码序列号</span>
+                <input class="textStyle inp2" name="FLDNumber" id="FLDNumber" readonly="readonly" onclick="erweima('LD')" />
+            </div>
+            <div class="content">
+                <span>材料牌号</span>
+                <input class="textStyle" name="FCLPH" id="FCLPH" readonly="readonly" onclick="erweima('LD')" />
+                <input type="hidden" name="FCLPH_ID" id="FCLPH_ID" />
+            </div>
+        </div>
+        <p class="btn-submit" style="display:block; ">
+            <input type="button" value="记录" class="btn btn2" onclick="db.openWin({ url:'../chukuList/chukuList_body.html'})" style="width: 90px;" />
+            <!-- <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" /> -->
+            <input type="button" value="提交" class="btn btn2" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+    <script src="../../script/api.js" type="text/javascript"></script>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="chuku.js" type="text/javascript" charset="utf-8"></script>
+   
+</body>
+</html>

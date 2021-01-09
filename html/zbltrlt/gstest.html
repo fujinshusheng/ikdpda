@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <script type="text/javascript" src="../../script/jQuery.js"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script type="text/javascript" src="../../script/jquery.signalR-2.2.0.js"></script>
+    <script type="text/javascript">
+
+        //---------------signalr---------------------
+        var machineHub;
+        var toClientId = '';
+
+        function RegisterClientMethods() {
+            machineHub.client.OnCallBackMachineStatus = function (status, EquipmentNumber) {
+                if (status == "1") {
+                    //logMsgFun('机械臂操作【打开】！', false);
+                }
+                else {
+                    //logMsgFun('机械臂操作【关闭】！', false);
+                }
+            }
+            //接收心跳包
+            machineHub.client.OnClientLive = function (a) {
+            }
+
+        }
+
+        function active() {
+            try {
+                var deviceId = $("#deviceId").val();
+                var ip = $("#ip").val();
+                var closeTime = $("#closeTime").val();
+                machineHub.server.operMechanicalArm("1", deviceId, ip, closeTime);
+            }
+            catch (e) {
+                alert("网络不通，自动重连中");
+                connSignalr();
+            }
+
+
+
+        }
+        // //连接
+        function connSignalr() {
+            try {
+                $.connection.MachineHub.url = "http://" + conn_ip + "/signalr";
+                machineHub = $.connection.MachineHub;
+                RegisterClientMethods();
+                $.connection.hub.url = "http://" + conn_ip + "/signalr";
+                $.connection.hub.start().done(function () {
+                    alert("connect success");
+                });
+
+                // 检测心跳包，断线重连
+                window.setInterval(function () {
+                    try {
+                        machineHub.server.clientLive();
+                    } catch (e) {
+                        ///logMsgFun("Signalr断开，重连！", false);
+                        connSignalr();
+                    }
+                }, 100000);
+
+            } catch (e) {
+                //logMsgFun("远程连接生产设备控制服务失败，请手动操作生产设备！");
+            }
+        }
+        //---------------signalr---------------------
+        //获取外部设置的IP地址
+        var conn_ip = "";
+        $(function () {
+            conn_ip = '47.91.250.49:9079'
+            $.getScript("http://" + conn_ip + "/signalr/hubs", function () {
+                connSignalr();
+            });
+
+
+
+            //---------------signalr---------------------
+        })
+
+
+
+
+    </script>
+</head>
+<body style="background-color: #fff;">
+    <!--设备ID，FJCHDZ 地址，FGBSJ 关闭时间-->
+    <div style="margin-top: 60px;">
+        设备ID：<input type="text" id="deviceId">
+    </div>
+    <div>
+        IP:<input type="text" id="ip" />
+    </div>
+    <div>
+        关闭时间:<input type="text" id="closeTime" />
+    </div>
+    <div>
+        <input type="button" value="激活" onclick="active()" />
+    </div>
+    
+</body>
+</html>

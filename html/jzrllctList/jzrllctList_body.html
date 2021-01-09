@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>集中熔炼炉出汤 - 列表</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        html, body {
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        集中熔炼炉出汤记录
+    </div>
+    <div class="list">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <thead>
+                <tr>
+                    <th>出汤时间</th>
+                    <th>出汤口</th>
+                    <th>汤包</th>
+                    <th>出汤操作工</th>
+                    <th style="display:none;">操作</th>
+                </tr>
+            </thead>
+            <tbody id="dataBox"></tbody>
+        </table>
+    </div>
+    <script type="text/plain" id="dataHtml">
+        <tr>
+            <td><div class="ikd_cbConl">_FDate_</div></td>
+            <td><div class="ikd_cbConl">_FTLKNumber_</div></td>
+            <td><div class="ikd_cbConl">_FTBNumber_</div></td>
+            <td><div class="ikd_cbConl">_FEmplNameCT_</div></td>
+            <td style="display:none;">
+                <div class="ikd_cbConl operation">
+                    <button class="ikd_cbclBtu" onclick="toDetail(_id_)">查看</button>
+                </div>
+            </td>
+        </tr>
+    </script>
+    <script src="../../script/api.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/availdate-v1.0.2.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //读取数据
+        var page = 1;
+        var state = true;
+        apiready = function () {
+            data();
+            api.addEventListener({
+                name: 'scrolltobottom',
+                extra: {
+                    threshold: 50            //设置距离底部多少距离时触发，默认值为0，数字类型
+                }
+            }, function (ret, err) {
+                if (state == false) {
+                    db.Ts.toast('暂无更多', 2000, 'x'); return;
+                }
+                page = page + 1;
+                data();
+                // 加载下一页的数据，然后向现有页面追加数据。
+            });
+        }
+        //去详情页
+        function toDetail(id) {
+            db.Data.set("ctID", id);
+            db.openWin({ url: '../jzrllct/jzrllct_head.html' });
+        }
+
+        function data() {
+            //没数据直接结束
+            db.ajax(function (ret, err) {
+                var data = eval('(' + ret + ')');
+                var rows = data.msg.ds;
+                if (db.Data.JsonGet(data, "status", "") == "200") {
+                    //没数据直接结束
+                    if (rows.length <= 0) {
+                        db.Ts.toast('暂无更多', 2000, 'x');
+                        state = false;//无数据
+                        return;
+                    }
+                    var dataHtml = $("#dataHtml").html();
+                    for (var x in rows) {
+                        $("#dataBox").append(dataHtml
+                            .replace(/_id_/g, '' + rows[x].FSoupCTID)
+                            .replace(/_FDate_/g, '' + rows[x].FDate.substring(0, 10) + " " + rows[x].FDate.substring(11, 19))
+                            .replace(/_FTLKNumber_/g, '' + rows[x].FTLKNumber)
+                            .replace(/_FTBNumber_/g, '' + rows[x].FTBNumber)
+                            .replace(/_FEmplNameCT_/g, '' + rows[x].FEmplNameCTName)
+                            .replace(/_FCreater_/g, '' + rows[x].FCreater)
+                        )
+                    }
+                } else {
+                    db.Ts.toast('网络异常请稍后重试...', 2000, 'x');
+                }
+            }, "m_jzrll", "post", {
+                    BLCompanyID: db.getCurrentUser().quyuId, pageindexInt: page
+                }, { title: '读取中', text: '请耐心等待...' });
+        }
+    </script>
+</body>
+</html>

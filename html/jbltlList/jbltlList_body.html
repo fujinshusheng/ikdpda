@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>机边炉投料 - 列表</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        html, body {
+            background: #fff;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        机边炉投料记录
+    </div>
+    <div class="list">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <thead><tr><th>时间</th><th>机边炉</th><th>投料操作工</th><th>铝锭(材料牌号)</th><th>压铸产品(材料牌号)</th><th style="display:none;">操作</th></tr></thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <script type="text/plain" id="texts">
+        <tr>
+            <td><div class="ikd_cbConl">_FDate_</div></td>
+            <td><div class="ikd_cbConl">_FWorkShipID_</div></td>
+            <td><div class="ikd_cbConl">_FTLKNumber_</div></td>
+            <td><div class="ikd_cbConl">_FNumber_</div></td>
+            <td><div class="ikd_cbConl">_FProNumber_</div></td>
+            <td style="display:none;">
+                <div class="ikd_cbConl operation">
+                    <button class="ikd_cbclBtu" onclick="chakan('_FWorkShipID_','_FTLKNumber_','_FNumber_','_FProNumber_')">查看</button>
+                </div>
+            </td>
+        </tr>
+    </script>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/api.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/H.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var page = 1;
+        var state = true;
+        apiready = function () {
+            data();
+            api.addEventListener({
+                name: 'scrolltobottom',
+                extra: {
+                    threshold: 50            //设置距离底部多少距离时触发，默认值为0，数字类型
+                }
+            }, function (ret, err) {
+                if (state == false) {
+                    db.Ts.toast('暂无更多', 2000, 'x'); return;
+                }
+                page = page + 1;
+                data();
+                // 加载下一页的数据，然后向现有页面追加数据。
+            });
+        }
+
+        //加载数据
+        function data() {
+            db.ajax(function (ret, err) {
+                var data = eval('(' + ret + ')');
+                if (db.Data.JsonGet(data, "status", "") == "200") {
+                    //没数据直接结束
+                    if (data.msg.ds.length <= 0) {
+                        db.Ts.toast('暂无更多', 2000, 'x');
+                        state = false;//无数据
+                        return;
+                    }
+                    var texts = $("#texts").html();
+                    var htmls = "";
+                    for (var i = 0; i < data.msg.ds.length; i++) {
+                        htmls += texts.replace(/_FWorkShipID_/g, '' + data.msg.ds[i].FWorkShipID)
+                            .replace(/_FFeedingID_/g, '' + data.msg.ds[i].FFeedingID)
+                            .replace(/_FDate_/g, '' + data.msg.ds[i].FDate.substring(0, 10) + " " + data.msg.ds[i].FDate.substring(11, 19))//
+                            .replace(/_FTLKNumber_/g, '' + data.msg.ds[i].FTLKNumberName)
+                            .replace(/_FNumber_/g, '' + data.msg.ds[i].FNumber + '(' + data.msg.ds[i].LDCLPH + ')')
+                            .replace(/_FProNumber_/g, '' + data.msg.ds[i].FProNumber + '(' + data.msg.ds[i].CPCLPH + ')');
+                    }
+                    $("#tbody").append(htmls);
+
+                } else {
+                    db.Ts.toast('网络异常请稍后重试...', 2000, 'x');
+                }
+            }, "m_jbltlList", "post", { pageindexInt: page, BLCompanyID: db.getCurrentUser().quyuId }, { title: '读取中', text: '请耐心等待...' });
+        }
+
+        //查看详情
+        function chakan(FWorkShipID, FTLKNumber, FNumber, FProNumber) {
+            db.Jianting.set("jblgetinfo", {
+                FWorkShipID: FWorkShipID,
+                FTLKNumber: FTLKNumber,
+                FNumber: FNumber,
+                FProNumber: FProNumber
+            });
+            setTimeout(function () {
+                api.closeWin();
+            }, 200);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>机边炉投料 - 表单</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        .btn-submit {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span onclick="api.closeWin();" class="goBack">返回</span>机边炉投料
+        <span class="code" onclick="jw.scanfun()"><i class="H-iconfont H-icon-scanning H-font-size-28 H-vertical-middle"></i></span>
+    </div>
+    <div class="fingerprint bg-ybzck">
+        <div class="textBox">
+            <ul>
+                <li>
+                    <p>扫描机边炉二维码编号</p>
+                    <input readonly="readonly" class="textStyle" id="FWorkShipID" onclick="erweima('FWorkShipID','YZJ')" name="FWorkShipID" />
+                </li>
+                <li>
+                    <p>扫描投料操作工二维码</p>
+                    <input readonly="readonly" class="textStyle" id="FTLKNumber" onclick="erweima('FTLKNumber','YG','tl')" name="FTLKNumber" />
+                </li>
+                <li>
+                    <p>扫描铝锭二维码序列号,材料牌号</p>
+                    <input readonly="readonly" class="textStyle" id="FNumber" onclick="erweima('FNumber','LD')" name="FNumber" style="width:90px;" />
+                    <input readonly="readonly" class="textStyle" id="LDCLPH" onclick="erweima('LDCLPH','LD')" name="LDCLPH" style="width:130px;" />
+                </li>
+                <li>
+                    <p>扫描压铸产品二维码</p>
+                    <input readonly="readonly" class="textStyle" id="FProNumber" onclick="erweima('FProNumber','CP')" name="FProNumber" />
+                </li>
+            </ul>
+        </div>
+        <p class="btn-submit" style="padding-top: 5px">
+            <input type="button" value="记录" class="btn btn2" onclick="H.openWin('jbltlList_head','../jbltlList/jbltlList_body.html')" style="width: 90px;" />
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="button" value="提交" class="btn btn2" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/base/H.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/api1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/com.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="jbltl.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>

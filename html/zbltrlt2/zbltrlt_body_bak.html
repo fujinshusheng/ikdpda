@@ -1,0 +1,260 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>周边炉投入铝汤 - 表单</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        .btn-submit {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="caozuochengg" style="background-color:#fff; font-size:16px; border: solid 4px #ff0000; display:none;
+ width:80%; padding:10px; position:absolute; top:50%;left:5%; z-index:9999; text-align:center;">操作成功！3秒后自动消失。</div>
+    <div class="header">
+        <span onclick="api.closeWin();" class="goBack">返回</span>机边炉加入铝汤
+        <span class="code" onclick="sjerweima()"><i class="H-iconfont H-icon-scanning H-font-size-28 H-vertical-middle"></i></span>
+    </div>
+    <div class="fingerprint bg-ybzck">
+        <div class="textBox">
+            <ul>
+                <li>
+                    <p>扫描机边熔化保温炉/机边保温炉二维码</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="FJBLNumber" id="inp1" onclick="erweima(1,'YZJ')" />
+                </li>
+                <li>
+                    <p>扫描汤包二维码，材料牌号</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="FTBNumber" id="inp2" onclick="erweima(2,'ZYB')" style="width:90px;" />
+                    <input type="text" readonly="readonly" class="textStyle" name="TBCLPH" id="TBCLPH" onclick="erweima(2,'ZYB')" style="width:130px;" />
+                </li>
+                <li>
+                    <p>扫描压铸产品二维码，材料牌号</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="FProNumber" id="inp3" onclick="erweima(3,'CP')" />
+                </li>
+                <li>
+                    <p>扫描转运操作工二维码</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="FEmplNameZY" id="inp4" onclick="erweima(4,'YG')" />
+                </li>
+            </ul>
+        </div>
+        <p class="btn-submit">
+            <input type="button" value="记录" class="btn btn2" onclick="db.openWin({url:'../zbltrltList/zbltrltList_body.html'})" style="width: 90px;" />
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="button" value="提交" class="btn btn2" style="width: 90px;" onclick="submitFun();" />
+        </p>
+    </div>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //允许摇一摇
+        var yaoyiyao = true;
+        //0表示一次扫描一次关闭   1表示连续扫描
+        var autoS = 0;
+        var ex = "";
+        var save = true;//是否执行正常保存
+        apiready = function () {
+            //监听声音键
+            db.syjt(function (ret, err) {
+                sjerweima();
+            });
+            //获取之前的汤包信息
+            if (db.Data.get("TBinp2k") != '') {
+                $("#inp2").val('' + db.Data.get("TBinp2k"));
+                db.Data.set("ZYB", "" + db.Data.get("TBinp2n"));
+                //材料牌号
+                $("#TBCLPH").val('' + db.Data.get("TBCLPH2k"));
+            }
+
+            //获取之前的转运工信息
+            if (db.Data.get("reZYG") != '') {
+                $("#inp4").val(db.Data.get("reZYG"));
+            }
+
+            ////触发了摇一摇事件
+            //api.addEventListener({
+            //    name: 'shake'
+            //}, function (ret, err) {
+            //    if (yaoyiyao) {
+            //        //不允许摇一摇打开了
+            //        yaoyiyao = false;
+            //        sjerweima();
+            //    }
+            //});
+        }
+
+        var setTimeoutObj1 = window.setTimeout(function () { }, 1);
+        //提交
+        function submitFun() {
+            if ($("#inp1").val() == "") {
+                logMsgFun("请扫描压铸机二维码");
+                return;
+            }
+            if ($("#inp3").val() == "") {
+                logMsgFun("请扫描产品二维码");
+                return;
+            }
+            db.ajax(function (ret, err) {
+                //验证服务端是否执行正确，不正确则内部直接提示错误信息
+                if (!db.dfc(ret)) return;
+
+                var data = eval('(' + ret + ')');
+                var das = data.msg.ds;
+                var status = das[0].status, msg = das[0].msg;
+                if (status == '000000') {
+                    //只记录，不提示
+                    logMsgFun(msg, false);
+                    //显示成功提示内容
+                    $("#caozuochengg").html(msg);
+                    $("#caozuochengg").show();
+                    //
+                    try { window.clearTimeout(setTimeoutObj1); } catch (e) { }
+
+                    try {
+                        //3秒后隐藏成功提示内容
+                        setTimeoutObj1 = window.setTimeout(function () {
+                            $("#caozuochengg").hide();
+                            $("#caozuochengg").html('');
+                        }, 3000);
+                    } catch (e) {
+                        $("#caozuochengg").hide();
+                        $("#caozuochengg").html('');
+                    }
+                    //清空炉号
+                    $("#inp1").val('');
+                    db.Data.set("YZJ", "");
+                    //清空产品
+                    $("#inp3").val('');
+                    db.Data.set("CP", "");
+                } else {
+                    logMsgFun(msg);
+                    //db.Ts.toast(msg,2000,'x');
+                }
+            }, "insertZS_SoupTR", "post", {
+                FJBLNumber: '' + db.Data.get("YZJ"),
+                FTBNumber: '' + db.Data.get("ZYB"),
+                FProNumber: '' + db.Data.get("CP"),
+                FEmplNameZY: '' + db.Data.get("YG"),
+                FCreater: db.login.Userid()//db.Data.toInt(db.login.Userid(), 0)
+            }, { title: '提交中', text: '请耐心等待...' });
+        }
+
+        //扫描二维码
+        function erweima(val, type) {
+            db.hw({
+                fun: function (ret, err) {
+                    //非连续扫描
+                    autoS = 0;
+                    var ipt1 = $("#inp1").val();
+                    var ipt2 = $("#inp2").val();
+                    var ipt3 = $("#inp3").val();
+                    //二维码解析
+                    db.Data.erweimajiexi(ret, type, function (n, k) {
+                        //记录汤包信息，下次可以不用重复扫
+                        if (val == 2 && type == 'ZYB') {
+                            db.Data.set("TBinp2n", n);
+                            db.Data.set("TBinp2k", k);
+                            //获取材料牌号
+                            getCLPH(n, 'ZYB', function (val) {
+                                $("#TBCLPH").val('' + val);
+                                db.Data.set("TBCLPH2k", val);
+                            });
+                        }
+                        //记录员工
+                        if (type == 'YG') {
+                            //记录当前转运工
+                            db.Data.set("reZYG", k);
+                        }
+                        //临时存储
+                        db.Data.set(type, n);
+                        $("#inp" + val).val(k);//赋值
+
+                        if (ipt1 == "" || ipt2 == "" || ipt3 == "") {
+                            return;
+                        }
+                    });
+                }
+            });
+        }
+
+        //在连续扫描状态下，是否已经完成了所有的扫描
+        //true：允许继续扫描，false：不允许继续扫描
+        function sess() {
+            if ($("#inp1").val() == '' || $("#inp2").val() == '' || $("#inp3").val() == '' || $("#inp4").val() == '')
+                //允许继续扫描
+                return true;
+            //不允许扫描
+            return false;
+        }
+        //随机扫描
+        function sjerweima() {
+            db.hw({
+                fun: function (ret, err) {
+                    //允许摇一摇
+                    yaoyiyao = true;
+                    //连续扫描
+                    autoS = 1;
+                    var ipt1 = $("#inp1").val();
+                    var ipt2 = $("#inp2").val();
+                    var ipt3 = $("#inp3").val();
+                    //二维码解析
+                    db.Data.sjerweimajiexi(ret, function (q, n, k) {
+                        var s = 0;
+                        //随机扫描赋值
+                        if (q == "YZJ") {
+                            s = 1;
+                            $("#inp1").val(k);
+                            //重新打开红外线
+                            if (sess() && autoS == 1) sjerweima();
+                        }
+                        if (q == "ZYB") {
+                            s = 1;
+                            $("#inp2").val(k);
+                            //记录汤包信息，下次可以不用重复扫
+                            db.Data.set("TBinp2n", n);
+                            db.Data.set("TBinp2k", k);
+                            //获取材料牌号
+                            getCLPH(n, 'ZYB', function (val) {
+                                $("#TBCLPH").val('' + val);
+                                db.Data.set("TBCLPH2k", val);
+                            });
+                            //重新打开红外线
+                            if (sess() && autoS == 1) sjerweima();
+                        }
+                        if (q == "CP") {
+                            s = 1;
+                            //临时存储
+                            db.Data.set("CP", n);
+                            $("#inp3").val(k);
+                            //重新打开红外线
+                            if (sess() && autoS == 1) sjerweima();
+                        }
+                        if (q == "YG") {
+                            s = 1;
+                            $("#inp4").val(k);
+                            //记录当前转运工
+                            db.Data.set("reZYG", k);
+                            //重新打开红外线
+                            if (sess() && autoS == 1) sjerweima();
+                        }
+
+                        if (s <= 0) {
+                            //db.Ts.toast('当前二维码非法',2000,'x');
+                            return;
+                        }
+
+                        db.Data.set(q, n);
+                        //临时存储
+                        if (ipt1 == "" || ipt2 == "" || ipt3 == "") {
+                            return;
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

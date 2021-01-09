@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>登录</title>
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <style type="text/css">
+        body, html {
+            height: 100%;
+        }
+
+        #showbox1 {
+            padding: 10px;
+        }
+
+            #showbox1 input {
+                margin: 10px;
+                padding: 10px;
+            }
+
+        #xxx111 {
+            position: absolute;
+            color: #fff;
+            font-size: 12px;
+            line-height: 40px;
+            z-index: 999;
+            width: 90px;
+            right: 30px;
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body class="loginBg">
+    <input type="hidden" id="quyu" value="0" beizhu="区域编号" />
+    <div class="login-bg">
+        <p class="logo"><img src="../image/logo.png" /></p>
+        <p class="j9img"><img src="../image/7.png" /></p>
+        <div class="inputBox" onclick="menuItem();" id="xxx111">选择区域</div>
+        <div class="inputBox"><i class="logIcos ico1"></i><input type="text" id="name" /></div>
+        <div class="inputBox"><i class="logIcos ico2"></i><input type="password" id="pass" /></div>
+        <div class="inputBox"><input id="IP" type="text" placeholder="IP地址" onclick="jw.stopsetInterval=true;" onblur="jw.stopsetInterval=false;" /></div>
+        <!-- onclick="jw.stopsetInterval=true;" onblur="jw.stopsetInterval=false;" -->
+        
+        <div class="loginBtn" onClick="saomiao();" style="display:none;"><input type="button" value="扫描" class="btn" /></div>
+        <div class="loginBtn" onClick="save();"><input type="button" value="登录" class="btn" /></div>
+        <div class="scanning" onClick="H.openWin('login-code', 'loginCode/login-code.html');" style="display:none"><p><img src="../image/ico_scanning.png" /></p><p>扫二维码登录</p></div>
+    </div>
+    <script src="../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	
+    <script src="../script/api.js" type="text/javascript"></script>
+	
+    <script src="../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../script/layer/layer.js"></script>
+    <script type="text/javascript">
+    	//location.href="zbltrlt/zbltrlt_body.html"
+        jw.scanfun = function (ret) {
+            alert('界面提示：' + ret);
+        }
+        var gc = {
+            ds: [{
+                ID: 45, Name: "总部"
+            }, {
+                ID: 116, Name: "IKD-5#工厂"
+            }, {
+                ID: 117, Name: "IKD-JM工厂"
+            }, {
+                ID: 86, Name: "IKD-3#工厂"
+            }]
+        };
+        //区域信息赋值
+        function quyuFun(quyuid, dom) {
+            var name = $(dom).val();
+            //赋值
+            $("#xxx111").html('' + name);
+            $("#quyu").val('' + quyuid);
+            db.Data.set("quyuID", quyuid);
+            db.Data.set("quyuName", name);
+            layer.closeAll();
+        }
+        //菜单选项
+        function menuItem() {
+            var htmls = [];
+            //获取数据
+            for (var x in gc.ds) {
+                htmls.push('<input type="button" value="' + gc.ds[x].Name + '" onclick="quyuFun(' + gc.ds[x].ID + ',this);" />');
+            }
+            layer.open({
+                type: 1,
+                title: '选择工厂区域', //不显示标题
+                content: '<div id="showbox1">' + htmls.join('') + '</div>',
+                closeBtn: false,
+                area: ['90%', '328px'],
+                scrollbar: false
+            });
+        }
+		
+        apiready = function () {
+            $("#IP").val("" + db.Data.get("IP"));
+            $("#name").val("" + db.Data.get("loginname"));
+            $("#pass").val("" + db.Data.get("loginpassword"));
+            var quyuid1 = db.Data.get("quyuID");
+            var quyuname1 = db.Data.get("quyuName");
+            if (quyuid1 == '') {
+                quyuid1 = $("#showbox1 input").eq(0).click();
+            }
+            $("#quyu").val("" + quyuid1);
+            $("#xxx111").html("" + quyuname1);
+        }
+
+        function save() {
+            var name = $("#name").val();
+            var pass = $("#pass").val();
+            var IP = $("#IP").val();
+            var quyuID = $("#quyu").val();
+            var quyuName = $("#xxx111").html();
+
+            if (name == "") {
+                db.Ts.toast("请输入用户名", 3000, "x");
+                return
+            }
+            if (pass == "") {
+                db.Ts.toast("请输入密码", 3000, "x");
+                return
+            }
+            if (IP == "") {
+                db.Ts.toast("IP地址不能为空", 3000, "x");
+                return
+            }
+            //if (quyuID == "") {
+            //    db.Ts.toast("请选择区域", 3000, "x");
+            //    return
+            //}
+            //if (quyuName == "") {
+            //    db.Ts.toast("请选择区域", 3000, "x");
+            //    return
+            //}
+            //存储到内存
+            db.Data.set("IP", IP);
+            db.Data.set("loginname", name);
+            db.Data.set("loginpassword", pass);
+            db.Data.set("quyuID", quyuID);
+            db.Data.set("quyuName", quyuName);
+            layer.msg('正在登陆中...');
+            db.submit("m_login", { UserName: name, Password: pass }, function (ret, err) {
+                try {
+                    var data = eval('(' + ret + ')');
+                    var das = data.msg.ds;
+                    var status = das[0].status, msg = das[0].msg;
+                    if (status != '000000') {
+                        db.Ts.toast(msg, 3000, "x");
+                        return
+                    }
+                    //权限
+                    var das1 = data.msg.ds1;
+                    db.Data.set("UserDate", JSON.stringify(das1));
+                    db.openWin({ url: 'main/main_body.html' });
+                } catch (e) {
+                    db.Ts.toast("网络异常请稍后重试..." + e, 3000, "x");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

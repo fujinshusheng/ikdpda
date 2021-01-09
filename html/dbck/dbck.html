@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>调拨出库</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+    </style>
+    <script type="text/javascript">
+        var type1Value = 2;
+    </script>
+</head>
+<body class="bg-ybzck">
+    <div class="header">
+        <span class="goBack" onclick="api.closeWin();">返回</span>调拨出库
+    </div>
+    <div class="fingerprint">
+        <div class="textBox2">
+            <div class="content">
+                <span>日期</span>
+                <div class="textSelect">
+                    <select name=YYYY onchange="YYYYMM(this.value)" id="YYYY" style="width:70px; float:left;"></select>
+                    <select name=MM onchange="MMDD(this.value)" id="MM" style="width:60px; float:left;"></select>
+                    <select name=DD id="DD" onchange="abc()" style="width:60px; float:left;"></select>
+                </div>
+            </div>
+            <div class="content" style="padding-top: 20px;">
+                <span>出库仓库</span>
+                <div class="textSelect">
+                    <select id="FOWorkShipID"></select>
+                </div>
+            </div>
+            <div class="content" style="padding-top: 20px;">
+                <span>入库仓库</span>
+                <div class="textSelect">
+                    <select id="FIWorkShipID"></select>
+                </div>
+            </div>
+            <div class="content" style="padding-top: 20px;">
+                <span>操作工</span>
+                <input class="textStyle" id="czg" readonly="readonly" onclick="erweima()" value="" />
+                <input id="czgID" type="hidden" />
+            </div>
+            <div class="content" id="lddiv" style="padding-top: 20px;">
+                <span>铝锭2D</span>
+                <input class="textStyle" id="ld" readonly="readonly" onclick="erweima()" value="" />
+                <input id="ldID" type="hidden" />
+            </div>
+            <div class="content" id="msg1div">
+                <p id="msg1" beizhu="显示对应的信息" style="color:red; font-weight:bold; font-size:16px; text-align:left;"></p>
+            </div>
+        </div>
+        <!--<br style="clear:both; font-size:0; height:0px;" />-->
+        <p class="btn-submit" style="display:block;padding-top: 4px;">
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="button" value="提交" class="btn btn2" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+    <script src="../../script/api.js" type="text/javascript"></script>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        apiready = function () {
+            //监听声音键
+            db.syjt(function (ret, err) {
+                erweima();
+            });
+            getck();
+            getck1();
+        }
+        //获取出库仓库
+        function getck1() {
+            db.submit("getyclck1", {
+                BLCompanyID: db.getCurrentUser().quyuId
+            }, function (ret, err) {
+                try {
+                    var data = eval('(' + ret + ')');
+                    var das = data.msg.ds;
+                    if (das != undefined && das.length > 0) {
+                        $("#FOWorkShipID").html('');
+                        //$("#ck").append('<option value="0">请选择</option>');
+                        //循环
+                        for (var x in das) {
+                            $("#FOWorkShipID").append('<option value="' + das[x].id + '">' + das[x].name + '</option>');
+                        }
+                    }
+                } catch (e) { }
+            });
+        }
+
+        //获取入库仓库
+        function getck() {
+            db.submit("getyclckNew", {
+                BLCompanyID: db.getCurrentUser().quyuId
+            }, function (ret, err) {
+                try {
+                    var data = eval('(' + ret + ')');
+                    var das = data.msg.ds;
+                    if (das != undefined && das.length > 0) {
+                        $("#FIWorkShipID").html('');
+                        //$("#ck").append('<option value="0">请选择</option>');
+                        //循环
+                        for (var x in das) {
+                            $("#FIWorkShipID").append('<option value="' + das[x].id + '">' + das[x].name + '</option>');
+                        }
+                    }
+                } catch (e) { }
+            });
+        }
+
+        //提交表单
+        function submitFun() {
+            db.Ts.jiazaiShow();
+            //alert(JSON.stringify(parms));
+            db.submit("submitDBCK", {
+                FDate: $("#YYYY").val() + "-" + $("#MM").val() + "-" + $("#DD").val(),
+                FRy: $("#czgID").val(),
+                FCode: $("#ldID").val(),
+                //出库仓库
+                FOWorkShipID: $("#FOWorkShipID").val(),
+                //入库仓库
+                FIWorkShipID: $("#FIWorkShipID").val(),
+                BLCompanyID: db.getCurrentUser().quyuId,
+                FCreater: db.login.Userid()
+            }, function (ret, err) {
+                db.Ts.jiazaiHide();
+                //验证服务端是否执行正确，不正确则内部直接提示错误信息
+                if (!db.dfc(ret)) return;
+
+                var data = eval('(' + ret + ')');
+                var das = data.msg.ds;
+                var status = das[0].status, msg = das[0].msg;
+                if (status == '000000') {
+                    $("#ld").val('');
+                    $("#ldID").val('');
+                }
+                logMsgFun(msg);
+            });
+        }
+
+        //TC20的PDA，焦点做法才会被识别到该方法
+        jw.scanfun = function (ret) {
+            //区域编号
+            var jwquyuID = db.Data.get("quyuID");
+            //3号厂的TC20PDA使用该方法
+            if (jwquyuID != null) {
+                //连续扫描
+                autoS = 0;
+                scancode(ret);
+            }
+        }
+
+        function scancode(ret) {
+            if (ret) {
+                var ewm = eval('(' + ret + ')');
+                var q = db.Data.JsonGet(ewm, "q", "");
+                var n = db.Data.JsonGet(ewm, "n", "");
+                var k = db.Data.JsonGet(ewm, "k", "");
+                k = (k == '' ? n : k);
+                if (q == "LD") {
+                    $("#ld").val('' + k);
+                    $("#ldID").val('' + n);
+                    //---------------------------------
+                    //扫描状态时执行
+                    if (type1Value == 2) {
+                        db.submit("getldmsgCK", { FCode: n }, function (ret4, err4) {
+                            try {
+                                var data = eval('(' + ret4 + ')');
+                                var das = data.msg.ds;
+                                $("#msg1").html('');
+                                if (das.length > 0)
+                                    $("#msg1").html('' + das[0].msg);
+                                else
+                                    $("#msg1").html('' + das[0].msg);
+                            } catch (e) { }
+                        });
+                    }
+                    //---------------------------------
+                    return;
+                }
+                //操作工
+                if (q == "YG") {
+                    $("#czg").val('' + k);
+                    $("#czgID").val('' + n);
+                    return;
+                }
+            }
+        }
+        //扫描二维码,指定某个输入框进行传值
+        function erweima() {
+            //区域编号
+            var jwquyuID = db.Data.get("quyuID");
+            //3号厂的TC20PDA使用该方法
+            if (jwquyuID != null) { return false; }
+            db.hw({
+                fun: function (ret, err) {
+                    scancode(ret);
+                }
+            });
+        }
+        //----------------------------------------------------------------------------
+        //润年
+        var n = 0, MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        $(function () {
+            var strYYYY = $("#YYYY").val();
+            var strMM = $("#MM").val();
+            var strDD = $("#DD").val();
+
+            //先给年下拉框赋内容
+            var y = new Date().getFullYear();
+            var str = "";// strYYYY.substring(0, strYYYY.length - 9);
+            //以今年为准，前30年，后30年
+            for (var i = y; i < (y + 5); i++)
+                $("#YYYY").append("<option value='" + i + "'>" + i + "年</option>");
+
+            //赋月份的下拉框
+            for (var i = 1; i < 13; i++) {
+                //是否当前月份
+                if (i == (new Date().getMonth() + 1))
+                    $("#MM").append("<option value='" + i + "' selected=selected>" + i + "月</option>");
+                else
+                    $("#MM").append("<option value='" + i + "'>" + i + "月</option>");
+            }
+
+            n = MonHead[new Date().getMonth()];
+            if (new Date().getMonth() == 1 && IsPinYear(YYYYvalue)) n++;
+            //赋日期下拉框
+            writeDay(n);
+
+            //是否当天
+            $("#DD option").each(function () {
+                if ($(this).val() == new Date().getDate()) $(this).attr("selected", "selected");
+            })
+        })
+        //年发生变化时日期发生变化(主要是判断闰平年)
+        function YYYYMM(str) {
+            var MMvalue = parseInt($("#MM").val());
+            var n = MonHead[MMvalue - 1];
+            if (MMvalue == 2 && IsPinYear(str)) n++;
+            writeDay(n);
+        }
+        //月发生变化时日期联动
+        function MMDD(str) {
+            var YYYYvalue = $("#YYYY").val();
+            var n = MonHead[parseInt(str) - 1];
+            if (str == 2 && IsPinYear(YYYYvalue)) n++;
+            writeDay(n);
+        }
+        //据条件写日期的下拉框
+        function writeDay(n) {
+            $("#DD").html('');
+            for (var i = 1; i < (n + 1); i++)
+                $("#DD").append("<option value='" + i + "'>" + i + "日</option>");
+        }
+
+        //判断是否闰平年
+        function IsPinYear(year) {
+            var _year = parseInt(year);
+            return (0 == _year % 4 && (_year % 100 != 0 || _year % 400 == 0));
+        }
+    </script>
+</body>
+</html>

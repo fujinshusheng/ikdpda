@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>机边炉配料 - 表单页面</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        .btn-submit {
+            display: block;
+        }
+    </style>
+    <script type="text/javascript">
+        var zhongl = 1;
+    </script>
+</head>
+<body>
+    <div class="header">
+        <span onclick="api.closeWin();" class="goBack">返回</span>机边炉配料
+        <span class="code" onclick="sjerweima()"><i class="H-iconfont H-icon-scanning H-font-size-28 H-vertical-middle"></i></span>
+    </div>
+    <div class="fingerprint bg-ybzck">
+        <div class="textBox" id="sl22jcc">
+            <ul>
+                <li>
+                    <p>材料牌号</p>
+                    <select class="textStyle" id="CLPH"></select>
+                </li>
+                <li>
+                    <p>扫描操作工二维码</p>
+                    <input type="text" readonly="readonly" class="textStyle" id="YG" onclick="erweima('YG')" />
+                    <input type="hidden" id="YGID" />
+                </li>
+                <li>
+                    <p>机边炉二维码</p>
+                    <input type="text" readonly="readonly" class="textStyle" id="jbl" onclick="erweima('YZJ')" />
+                    <input type="hidden" id="jblID" />
+                </li>
+                <li>
+                    <p>重量(KG)</p>
+                    <input type="number" class="textStyle" name="ZL" id="ZL" onclick=" zhongl = 0;" />
+                </li>
+            </ul>
+        </div>
+        <p class="btn-submit">
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="submit" value="提交" class="btn btn2" id="but" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/base/H.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/api1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="jblpl.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            window.setInterval(function () {
+                if (zhongl == 0) {
+                    $("body").css("padding-top", "25px");
+                    $("#sl22jcc").css("padding-top", "80px");
+                }
+            }, 1000);
+        })
+
+    </script>
+</body>
+</html>

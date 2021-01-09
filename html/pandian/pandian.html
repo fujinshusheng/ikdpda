@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>原标准出库 - 表单 - 内容页面</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+    </style>
+</head>
+<body class="bg-ybzck">
+    <div class="header">
+        <span class="goBack" onclick="api.closeWin();">返回</span>铝锭盘点
+    </div>
+    <div class="fingerprint">
+        <div class="textBox2">
+            <div class="content">
+                <span>仓库</span>
+                <div class="textSelect">
+                    <select id="ck"></select>
+                </div>
+            </div>
+            <div class="content">
+                <span>库位</span>
+                <input class="textStyle" id="FKW" readonly="readonly" onclick="erweima()" value="" />
+            </div>
+            <div class="content">
+                <span class="selectName">重量</span>
+                <input class="textStyle" id="zhongl" value="" />
+            </div>
+            <div class="content">
+                <span class="selectName">牌号</span>
+                <div class="textSelect">
+                    <select id="paih"><option value="0">选择牌号</option></select>
+                </div>
+            </div>
+            <div class="content">
+                <span>序列号</span>
+                <input class="textStyle" id="xulieh" readonly="readonly" onclick="erweima()" value="" />
+            </div>
+        </div>
+        <p class="btn-submit" style="display:block">
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="button" value="提交" class="btn btn2" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+    <script src="../../script/api.js" type="text/javascript"></script>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="pandian.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

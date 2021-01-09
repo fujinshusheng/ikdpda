@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>铝汤检验 - 表单</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+</head>
+<body>
+    <div class="header">
+        <span class="goBack" onclick="api.closeWin();">返回</span>取小样<span class="code" onclick="saoyisao()"></span>
+    </div>
+    <div class="fingerprint bg-ybzck">
+        <div class="textBox">
+            <ul>
+                <li>
+                    <p>炉号二维码</p>
+                    <input class="textStyle inp1" name="FTLKNumber" id="FTLKNumber" onclick="erweima('TL')" readonly="readonly" />
+                </li>
+                <li>
+                    <p>铝样容器二维码</p>
+                    <input class="textStyle inp2" name="FPenNumber" id="FPenNumber" onclick="erweima('PH')" readonly="readonly" />
+                </li>
+                <li>
+                    <p>取样人员二维码</p>
+                    <input class="textStyle inp3" name="FCheckmanNumber" id="FCheckmanNumber" onclick="erweima('YG','jy')" readonly="readonly" />
+                </li>
+                <li>
+                    <p id="lpch" beizhu="炉批次号" style="color:red; font-weight:bold; font-size:16px;"></p>
+                </li>
+            </ul>
+        </div>
+        <input type="hidden" name="FCreater" id="FCreater" />
+        <p class="btn-submit">
+            <input type="button" value="记录" class="btn btn2" onclick="db.openWin({ url: '../lqltList/lqltList_body.html' })" style="width: 90px;" />
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="button" value="提交" class="btn btn2" onclick="submitFun();" style="width: 90px;" />
+        </p>
+
+    </div>
+    <script src="../../script/api.js" type="text/javascript"></script>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/DbHelper2.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lqlt.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //扫一扫
+        function saoyisao() {
+            db.Jianting.set("lqltsys", {
+                open: 1
+            });
+        }
+
+
+
+
+
+
+    </script>
+</body>
+</html>

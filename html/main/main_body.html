@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>控制面板</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        body, html {
+            height: 100%;
+            overflow: auto;
+            padding-bottom: 10px;
+        }
+
+        .ds {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="intrance" style="padding-bottom:180px;">
+        <ul>
+            <li id="but11" class="intranceIcos ico5 ds" onclick="db.openWin({ url: '../ldcx/ldcx.html' });">
+                <p>
+                    <img src="../../image/btn_intrance5.png" />
+                </p><p class="txt">铝锭查询</p>
+            </li>
+            <li id="but9" class="intranceIcos ico2 ds" onclick="db.openWin({ url: '../ruku/ruku.html' });">
+                <p>
+                    <img src="../../image/btn_intrance2.png" />
+                </p><p class="txt">铝锭入库</p>
+            </li>
+            <li id="but1" class="intranceIcos ico1 ds" onclick="db.Data.set('ckID',0);db.openWin({url: '../chuku/chuku_body.html'});">
+                <p>
+                    <img src="../../image/btn_intrance1.png" />
+                </p><p class="txt">铝锭出库</p>
+            </li>
+            <li id="but10" class="intranceIcos ico5 ds" onclick="db.openWin({ url: '../pandian/pandian.html' });">
+                <p>
+                    <img src="../../image/btn_intrance2.png" />
+                </p><p class="txt">铝锭盘点</p>
+            </li>
+            <li id="but13" class="intranceIcos ico5 ds" onclick="db.Data.set('ldtl', 0); db.openWin({ url: '../ldtl/ldtl.html' });">
+                <p>
+                    <img src="../../image/btn_intrance1.png" />
+                </p><p class="txt">铝锭退料</p>
+            </li>
+
+            <li id="but2" class="intranceIcos ico2 ds" onclick="db.openWin({url: '../rlcjtl/rlcjtl_body.html'});">
+                <p>
+                    <img src="../../image/btn_intrance2.png" />
+                </p><p class="txt">熔炼车间投料</p>
+            </li>
+
+            <li id="but3" class="intranceIcos ico3 ds" onclick="db.openWin({url: '../jbltl/jbltl_body.html'});">
+                <p>
+                    <img src="../../image/btn_intrance3.png" />
+                </p><p class="txt">机边炉投料</p>
+            </li>
+
+            <li id="but5" class="intranceIcos ico4 ds" onclick="db.Data.set('ctID',0);db.openWin({url: '../jzrllct/jzrllct_body.html'});">
+                <p>
+                    <img src="../../image/btn_intrance4.png" />
+                </p><p class="txt">熔炼炉出汤</p>
+            </li>
+
+            <li id="but14" class="intranceIcos ico4 ds" onclick="db.openWin({ url: '../zbwl/zbwl.html' });">
+                <p>
+                    <img src="../../image/btn_intrance4.png" />
+                </p><p class="txt">转保温炉</p>
+            </li>
+
+            <li id="but6" class="intranceIcos ico5 ds" onclick="db.openWin({url: '../zbltrlt/zbltrlt_body.html'});">
+                <p>
+                    <img src="../../image/btn_intrance5.png" />
+                </p><p class="txt">机边炉加铝汤</p>
+            </li>
+
+            <li id="but4" class="intranceIcos ico5 ds" onclick="db.Data.set('lqtlID',0);db.openWin({url: '../lqlt/lqlt_body.html'});">
+                <p>
+                    <img src="../../image/btn_intrance1.png" />
+                </p><p class="txt">取小样</p>
+            </li>
+
+
+            <li id="but7" class="intranceIcos ico5 ds" onclick="db.Data.set('zb',0);db.openWin({url: '../zb/zb.html'});">
+                <p>
+                    <img src="../../image/btn_intrance1.png" />
+                </p><p class="txt">转包</p>
+            </li>
+
+            <li id="but8" class="intranceIcos ico2 ds" onclick="db.Data.set('peiliao', 0); db.openWin({ url: '../peiliao/peiliao.html' });">
+                <p>
+                    <img src="../../image/btn_intrance2.png" />
+                </p><p class="txt">配料投料</p>
+            </li>
+
+            <li id="but12" class="intranceIcos ico2 ds" onclick="db.Data.set('jblpl', 0); db.openWin({ url: '../jblpl/jblpl.html' });">
+                <p>
+                    <img src="../../image/btn_intrance4.png" />
+                </p><p class="txt">机边炉配料</p>
+            </li>
+
+            <li id="but17" class="intranceIcos ico2 ds" onclick="db.openWin({ url: '../bwlpl/bwlpl.html' });">
+                <p>
+                    <img src="../../image/btn_intrance3.png" />
+                </p><p class="txt">保温炉配料</p>
+            </li>
+
+            <li id="but15" class="intranceIcos ico4 ds" onclick="db.openWin({ url: '../dbck/dbck.html' });">
+                <p>
+                    <img src="../../image/btn_intrance1.png" />
+                </p><p class="txt">调拨出库</p>
+            </li>
+
+            <li id="but16" class="intranceIcos ico3 ds" onclick="db.openWin({ url: '../dbrk/dbrk.html' });">
+                <p>
+                    <img src="../../image/btn_intrance3.png" />
+                </p><p class="txt">调拨入库</p>
+            </li>
+
+
+
+
+            <li id="but19" class="intranceIcos ico5 ds" onclick="db.Data.set('lqtlID',0);db.openWin({url: '../lqlt_new/lqlt_body.html'});">
+                <p>
+                    <img src="../../image/btn_intrance1.png" />
+                </p><p class="txt">取小样(新)</p>
+            </li>
+
+
+            <li onclick="db.openWin({url:'../login.html'});" class="intranceIcos ico6 ">
+                <p>
+                    <img src="../../image/btn_intrance6.png" />
+                </p><p class="txt">重新登录</p>
+            </li>
+            <li onclick="update_APP(true);" class="intranceIcos ico5">
+                <p><img src="../../image/btn_intrance4.png" /></p>
+                <p class="txt">手动更新</p>
+            </li>
+        </ul>
+    </div>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/api.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        apiready = function () {
+            //api.addEventListener({
+            //    name: 'keymenu'
+            //}, function (ret, err) {
+            //    alert('按了菜单键');
+            //});
+
+            //更新app
+            update_APP(false);
+
+            //------------------------------
+            var data = db.login.UserData();
+            //alert(data);
+            try {
+                var UData = eval('(' + data + ')');
+                if (UData.length <= 0) {
+                    //db.Ts.alert({ msg: '暂无任何权限' });
+                    return;
+                }
+
+                for (var i = 0; i < UData.length; i++) {
+                    $("#but" + UData[i].FBDCode).show();
+                }
+
+            } catch (e) {
+                alert(e);
+            }
+            //------------------------------
+        }
+
+        //更新app版本信息
+        var updateAPP = '';
+        var layerId;
+        //APP更新
+        function update_APP(isupdate) {
+            if (isupdate == undefined) isupdate = true;
+            //更新app版本信息
+            updateAPP = db.Data.get("updateAPP");
+
+            //获取版本更新信息
+            db.ajax(function (ret, err) {
+                //验证服务端是否执行正确，不正确则内部直接提示错误信息
+                if (!db.dfc(ret,"执行接口updateAPP报错")) return;
+                //是否一致
+                if (isupdate || updateAPP != ret) {
+                    //转换数据
+                    var data = eval('(' + ret + ')');
+                    var das = data.msg.ds;
+
+                    //-------------更新 begin----------------------
+                    //获取唯一码
+                    var _getTime = db.nowDate().getTime;
+                    var savepaths = 'fs://ikd_' + _getTime + '.apk';
+                    api.download({
+                        url: 'http://' + db.Data.get("IP") + das[0].p,
+                        savePath: '' + savepaths,
+                        report: true,
+                        cache: true,
+                        allowResume: true
+                    }, function (ret1, err) {
+                        if (layerId == undefined) {
+                            layerId = layer.open({
+                                end: function (index, layero) { },
+                                btn: ['转到后台执行'],
+                                title: '下载进度',
+                                content: '<div id="downloadId">正在下载中...</div><br />下载完成后请务必先安装，否则下次不会更新当前版本！'
+                            });
+                        }
+                        if (ret1.state == 1) {
+                            //下载成功
+                            layer.close(layerId);
+                            layerId = undefined;
+                            //存储到内存中
+                            db.Data.set("updateAPP", ret + '');
+                            //安装应用
+                            api.installApp({ appUri: '' + savepaths });
+                        } else {
+                            //下载过程中  JSON.stringify(ret1)
+                            $("#downloadId").html('下载进度：' + ret1.percent + '%');
+                        }
+                    });
+                    //-------------更新 end----------------------
+                }
+            }, "updateAPP", "post", { a: 1 }, {
+                title: '正在检测更新版本信息...'
+            });
+        }
+    </script>
+</body>
+</html>

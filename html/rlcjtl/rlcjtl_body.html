@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>熔炼车间投料 - 表单页面</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        .btn-submit {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span onclick="api.closeWin();" class="goBack">返回</span>熔炼车间投料
+        <span class="code" onclick="sjerweima();"><i class="H-iconfont H-icon-scanning H-font-size-28 H-vertical-middle"></i></span>
+    </div>
+    <div class="fingerprint bg-ybzck">
+        <div class="textBox">
+            <ul>
+                <li>
+                    <p>扫描投料口二维码编号</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="FTLKID" id="inp1" onclick="erweima(1, 'TL')" />
+                    <input type="button" value="撤销" class="btn btn2" style="width: 60px;display:none;" id="cxid1" onclick="chexiao();" />
+                </li>
+                <li>
+                    <p>扫描投料操作工二维码</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="FTLYGNnmber" id="inp2" onclick="erweima(2,'YG')" />
+                </li>
+                <li>
+                    <p>扫描铝锭/标准桶二维码序列号</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="FNumber" id="inp3" onclick="erweima(3, 'LD')" />
+                </li>
+                <li>
+                    <p id="lpch" beizhu="炉批次号" style="color:red; font-weight:bold; font-size:16px;"></p>
+                </li>
+                <li>
+                    <p id="CLPH" beizhu="显示材料牌号" style="color:red; font-weight:bold; font-size:16px;"></p>
+                </li>
+                <li>
+                    <p id="ZL" beizhu="重量" style="color:red; font-weight:bold; font-size:16px;"></p>
+                </li>
+               
+            </ul>
+        </div>
+        <p class="btn-submit">
+            <input type="button" value="记录" class="btn btn2" onclick="H.openWin('rlcjtlList_head', '../rlcjtlList/rlcjtlList_body.html')" style="width: 90px;" />
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="button" value="提交" class="btn btn2" style="width: 90px;" onclick="submitFun();" />
+        </p>
+    </div>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/base/H.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/api1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="rlcjtl.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

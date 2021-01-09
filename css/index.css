@@ -1,0 +1,108 @@
+.height-100{ height:100%;}
+.H-header { min-height: 40px; position:fixed;}
+.H-main{ height:100%;}
+#H-frame{ width:100%; height:100%;}
+.show{ display:block;}
+.hide{ display:none;}
+.header{ background:#bd1738; height:40px; color:#fff; text-align:center; line-height:40px; font-size:16px; position:fixed; width:100%; min-width:320px; max-width:640px;}
+.header .goBack{ position:absolute; left:10px; top:0;}
+
+.headerList{ position: fixed; top:0}
+
+.btn{ background:#bd1738; border-radius:100px; width:80%; text-align:center; font-size:18px; color:#fff; line-height:40px; border:none; outline:medium; 
+                 font-family:inherit; -moz-box-shadow:3px 3px 6px #222 inset; -webkit-box-shadow:3px 3px 6px #222 inset; 
+                 box-shadow:3px 3px 6px #222 inset;  padding-top:3px;}
+.btn2{ width:40%;}
+/*****��¼*********/
+.logIcos{ background:url(../image/icos_login.png) no-repeat; background-size:50px;}
+.loginBg{ background: url(../image/bg-login.jpg) no-repeat; background-size: cover;}
+.login-bg{  width:100%; height:100%; text-align:center;}
+.login-bg .logo{ padding-top:19%;}
+.login-bg .logo img{ display:initial; width:160px;}
+.login-bg .j9img{ padding-top:4%; padding-bottom:12%;}
+.login-bg .j9img img{ display:initial; width:200px; margin-left:-10px;}
+.inputBox{ background:#000;  background: rgba(0,0,0,.5); 
+             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#78000000,endColorstr=#78000000); border-radius:5px; width:65%; height:40px; margin:0 auto; overflow:hidden; margin-bottom:10px; position:relative; padding-left:50px;}
+.inputBox input{ background:none; border:none; outline:medium; width:100%; height:40px; color:#fff; font-size:14px; font-family:inherit;}
+.inputBox i{ width:40px; height:40px; display:block; margin-left:10px; position:absolute; left:0; top:0;}
+.inputBox .ico1{ background-position: -6px -8px;}
+.inputBox .ico2{ background-position: -6px -76px;}
+.loginBtn{ margin-top:10%;}
+.scanning { margin-top:15%;}
+.scanning img{ width:28px;}
+.scanning p{ color:#fff; font-size:14px; line-height:30px;}
+
+
+
+/******��ť���******/
+.intrance{ overflow:hidden; background:url(../image/bg-intrance.jpg) no-repeat; width:100%; height:100%; text-align:center; background-size: 100% 100%; }
+.intrance ul{ padding-top:10%;}
+.intrance li{ width:33.3333333%; float:left; padding-bottom:10%; text-align:center;}
+.intrance img{ width:65%;}
+.intrance .txt{ color:#fff; font-size:16px; text-align:center; padding:10px 0; line-height:20px; margin:0 auto;}
+
+
+/********��ά���¼*******/
+.login-code{ background:url(../image/bg-login-code.jpg) no-repeat; width:100%; height:100%; text-align:center; background-size: 100% 100%; }
+.login-code .tip{ color:#fff; line-height:60px; padding-top:20%; font-size:18px; padding-bottom:10px;}
+.login-code .bg-scanning{ width:70%; display:initial;}
+.login-code .btn-back { padding-top:18%;}
+
+
+/******���¯Ͷ��******/
+.fingerprint{ width:100%; height:100%; text-align:center; }
+.bg-jbltl{ background:url(../image/bg-jbltl.jpg) no-repeat; background-size: cover;}
+.fingerprintImg{ padding-top:55px;}
+.fingerprintImg img{ width:60px;}
+.fingerprint .tip{ font-size:16px; color:#fff; line-height:40px;}
+.textBox{ width:80%; margin:0 auto;padding-top:40px;}
+.textBox li{ position:relative;}
+.textBox label.error{ position:absolute; bottom:5px; right:-10px; color:#BD1738;}
+.textBox p{ text-align:left; font-size:14px; color:#fff; padding-top:10px; padding-bottom:5px; line-height:24px;}
+.textBox .textStyle{ width:94%; background:#cccccc; height:30px; border-radius:6px; border:none; outline:medium; margin-bottom:5px; padding:0 3%;}
+.btn-submit { padding-top:8%; padding-bottom:8%; display:none;}
+
+
+.bg-jzrllct{ background:url(../image/bg-jzrllct.jpg) no-repeat; background-size: cover; min-height:618px;}
+
+
+.bg-rlcjtl{ background:url(../image/bg-rlcjtl.jpg) no-repeat; background-size: cover;}
+
+
+.bg-ybzck{ background:url(../image/bg-ybzck.jpg) no-repeat; background-size:cover;}
+.textBox2{ padding-top:40px;}
+.textBox2 .content{ padding:0; padding-top:25px; position:relative; min-height:30px;}
+.textBox2 .content span{ float:left; width:20%; text-align:right; font-size: 16px; color:#fff; line-height:20px; padding:5px 0; padding-left:5%; padding-right:3%;}
+.textBox2 .textStyle{ float:left; width:54%; height:30px; background:#ccc; border-radius:6px; border:none; outline:medium; padding:0 3%;}
+.textBox2 .list2 .textStyle{ margin-top:5px;}
+.textBox2 .list2 span{ padding-top:0; padding-bottom:0;}
+.textBox2 .selectStyle{ width: 60%; float: left; height: 30px; background: #ccc; border-radius: 6px; border:none; outline:medium;}
+.textBox2 label.error{ color:#BD1738; float: left; padding-left: 5px; padding-top: 8px;}
+
+.bg-zbltrlt{ background:url(../image/bg-zbltrlt.jpg) no-repeat; background-size: cover;}
+
+.list{ overflow-x:scroll; padding-bottom:10px; width:100%; padding-top: 40px;}
+.list table{ border:solid 1px #e5e5e5; border-right:none; width:100%; }
+.list table th{ white-space:nowrap; border-right:solid 1px #e5e5e5; padding:10px; text-align:center;}
+.list table .ikd_cbConl{ border-top:solid 1px #e5e5e5;border-right:solid 1px #e5e5e5; padding:10px; text-align:center; color:#666; white-space:nowrap;}
+.list table .operation{ white-space:nowrap; padding:10px 5px;}
+.list table .operation button{ margin:0 10px;}
+.list table button{ background:none; outline:medium; border:none; border-bottom:1px solid #bd1738; color:#bd1738;}
+
+
+.textSelect{ width: 60%; float:left; position:relative;}
+.icoCorner{ position:absolute; width:30px; height:30px; right:0; top:0; line-height:30px;}
+.textSelect .selectBox{ width:90%; padding:0 5%;}
+.textSelect select{ width:100%; padding:0 3%; height: 30px; background: #ccc; border-radius: 6px; outline:medium;}
+.ikd_cbLt{ background:#fff; width:80%; display:none;  overflow-y:scroll; left:10%; right:10%; 
+			position:fixed; height:60%; top:20%; border-radius:10px; }
+.blackOver{ width:100%; height:100%; position:fixed; left:0; top:0;display:none;position:fixed;_position:absolute;z-index:10;width:100%;min-height:800px;top:0%;left:0%;background-color: black;z-index:1000;-moz-opacity: 0.55;opacity:.55;filter: alpha(opacity=55);}
+
+.textBox .downlist{ width:100%; padding:0 5%; height: 30px; background: #ccc; border-radius: 6px; outline:medium;}
+.code{ position:absolute; right:10px;}
+.code i{ font-size:22px;}
+
+
+ html, body {
+         overflow:hidden;
+        }

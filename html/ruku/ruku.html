@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>原标准出库 - 表单 - 内容页面</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <script src="../../script/api.js" type="text/javascript"></script>
+    <script src="../../script/jQuery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="ruku.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body class="bg-ybzck">
+    <div class="header">
+        <span class="goBack" onclick="api.closeWin();">返回</span>铝锭入库
+    </div>
+    <div class="fingerprint">
+        <div class="textBox2">
+            <div class="content">
+                <span>仓库</span>
+                <div class="textSelect">
+                    <select id="ck"></select>
+                </div>
+            </div>
+            <div class="content">
+                <span>供应商</span>
+                <input class="textStyle" id="mingc" readonly="readonly" style="width:92px;float:left" />
+                <div class="textSelect" style="float:left;width:80px;">
+                    <select style="width:80px;" id="cp" onchange="xuanz(this);"><option value="0" FShortName="">选择车牌</option>
+                    </select>
+                </div>
+            </div>
+            <div class="content">
+                <span>牌号</span>
+                <input class="textStyle" id="paihName" readonly="readonly" onclick="erweima()" />
+                <input id="paih" type="hidden" />
+            </div>
+            <div class="content">
+                <span class="selectName">炉号</span>
+                <input class="textStyle" id="luh" readonly="readonly" onclick="erweima()" />
+            </div>
+            <div class="content">
+                <span class="selectName">条数</span>
+                <span class="selectName" style="position:absolute; left:116px;">重量</span>
+                <input class="textStyle inp2" id="tiaos" readonly="readonly" onclick="erweima()" style="width:50px; position:absolute; left:90px;" />
+                <input class="textStyle" id="zhongl" readonly="readonly" onclick="erweima()" style="width:60px; position:absolute;" />/
+            </div>
+            <div class="content">
+                <span>序列号</span>
+                <input class="textStyle" id="xulieh" readonly="readonly" onclick="erweima()" />
+            </div>
+        </div>
+        <p class="btn-submit" style="display:block">
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="button" value="提交" class="btn btn2" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+</body>
+</html>

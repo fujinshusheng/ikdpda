@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>主页</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+    html,body{ background: #fff;}
+    </style>
+</head>
+<body>
+    <div class="header">
+        取小样记录
+    </div>
+    <div class="list">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <th>日期</th>
+                <th>炉号</th>
+                <th>铝样容器</th>
+                <th>取样人员</th>
+                <th style="display:none;">操作</th>
+            </tr>
+            <tbody id="dataBox"></tbody>
+        </table>
+    </div>
+    <script type="text/plain" id="dataHtml">
+        <tr>
+            <td>
+                <div class="ikd_cbConl">_FDate_</div>
+            </td>
+            <td>
+                <div class="ikd_cbConl">_FTLKNumber_</div>
+            </td>
+            <td>
+                <div class="ikd_cbConl">_FPenNumber_</div>
+            </td>
+            <td>
+                <div class="ikd_cbConl">_FCheckmanNumber_</div>
+            </td>
+            <td style="display:none;">
+                <div class="ikd_cbConl operation">
+                    <button class="ikd_cbclBtu" onclick="toDetail(_id_)">查看</button>
+                </div>
+            </td>
+        </tr>
+    </script>
+    <script src="../../script/api.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/availdate-v1.0.2.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        //读取数据
+        var page = 1;
+        var state = true;
+        apiready = function () {
+            data();
+            api.addEventListener({
+                name: 'scrolltobottom',
+                extra: {
+                    threshold: 50            //设置距离底部多少距离时触发，默认值为0，数字类型
+                }
+            }, function (ret, err) {
+                if (state == false) {
+                    db.Ts.toast('暂无更多', 2000, 'x'); return;
+                }
+                page = page + 1;
+                data();
+                // 加载下一页的数据，然后向现有页面追加数据。
+            });
+        }
+        //去详情页
+        function toDetail(id) {
+            db.Data.set("lqtlID", id);
+            db.openWin({ url: '../lqlt/lqlt_head.html' });
+        }
+        //获取数据
+        function data() {
+            db.ajax(function (ret, err) {
+                var data = eval('(' + ret + ')');
+                var rows = data.msg.ds;
+                if (db.Data.JsonGet(data, "status", "") == "200") {
+                    //没数据直接结束
+                    if (rows.length <= 0) {
+                        db.Ts.toast('暂无更多', 2000, 'x');
+                        state = false;//无数据
+                        return;
+                    }
+                    var dataHtml = $("#dataHtml").html(); 
+                    // var str = "";
+                    // for(var key=0;key<= rows.length - 1;key++){
+                    //     str += "<tr>";
+                    //     //str += "<td>" + rows[key].FPENUSINGRecordID + "</td>";
+                    //     str += "<td>" + rows[key].FDate.substring(0, 10) + " " + rows[key].FDate.substring(11, 19) + "</td>";
+                    //     str += "<td>" +  rows[key].LH +  "</td>";
+                    //     str += "<td>" +  rows[key].FPenNumberName +  "</td>";
+                    //     str += "<td>" +  rows[key].FCheckmanNumberName +  "</td>";
+                    //     str += "</tr>";
+                    // }
+                    // $("#dataBox").html(str); 
+                    for (var x in rows) {
+                        $("#dataBox").append(dataHtml
+                            .replace(/_id_/g, '' + rows[x].FPENUSINGRecordID)
+                            .replace(/_FDate_/g, '' + rows[x].FDate.substring(0, 10) + " " + rows[x].FDate.substring(11, 19))
+                            .replace(/_FTLKNumber_/g, '' + rows[x].LH)
+                            .replace(/_FPenNumber_/g, '' + rows[x].FPenNumberName)
+                            .replace(/_FCheckmanNumber_/g, '' + rows[x].FCheckmanNumberName)
+                        )
+                    }
+                } else {
+                    db.Ts.toast('网络异常请稍后重试...', 2000, 'x');
+                }
+            }, "m_lqltlist", "post", { pageindexInt: page, BLCompanyID: db.getCurrentUser().quyuId }, { title: '读取中', text: '请耐心等待...' });
+        }
+    </script>
+</body>
+</html>

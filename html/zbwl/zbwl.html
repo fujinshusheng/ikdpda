@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>转保温炉 - 表单页面</title>
+    <link rel="stylesheet" href="../../css/base.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <style type="text/css">
+        .btn-submit {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span onclick="api.closeWin();" class="goBack">返回</span>转保温炉
+        <span class="code" onclick="sjerweima()"><i class="H-iconfont H-icon-scanning H-font-size-28 H-vertical-middle"></i></span>
+    </div>
+    <div class="fingerprint bg-ybzck">
+        <div class="textBox">
+            <ul>
+                <li>
+                    <p>扫描操作工二维码</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="YG" id="YG" onclick="erweima('YG')" />
+                    <input type="hidden" id="YGValue" />
+                </li>
+                <li>
+                    <p>扫描出汤口二维码</p>
+                    <input type="text" readonly="readonly" class="textStyle" name="LC" id="LC" onclick="erweima('LC')" />
+                    <input type="hidden" id="LCValue" />
+                </li>
+            </ul>
+        </div>
+        <div class="content">
+            <p id="msg1" beizhu="显示炉号" style="color:red; font-weight:bold; font-size:16px; text-align:center;"></p>
+        </div>
+        <p class="btn-submit">
+            <input type="button" value="日志" class="btn btn2" onclick="$('.kjjjskxjjx').show();" style="width: 90px;" />
+            <input type="submit" value="提交" class="btn btn2" id="but" onclick="submitFun();" style="width: 90px;" />
+        </p>
+    </div>
+    <script src="../../script/base/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/layer/layer.js"></script>
+    <script src="../../script/base/H.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/base/api1.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/DbHelper.js" type="text/javascript" charset="utf-8"></script>
+    <script src="zbwl.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
